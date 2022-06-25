@@ -27,7 +27,7 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["vasudevarpitta"]
+ALLOWED_HOSTS = ["vasudevarpitta.us-east.mybluemix.net"]
 
 
 # Application definition
