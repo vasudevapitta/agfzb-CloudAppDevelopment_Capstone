@@ -27,7 +27,7 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["vasudevapitta.us-east.cf.appdomain.cloud"]
+ALLOWED_HOSTS = ["vasudevarpitta"]
 
 
 # Application definition
