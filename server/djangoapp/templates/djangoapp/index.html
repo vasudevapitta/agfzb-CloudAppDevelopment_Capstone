@@ -17,9 +17,26 @@
     <!--Add a nav bar here -->
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <div class="navbar-header">
-                  <a class="navbar-brand" href="about">About us</a>
-            </div>
+
+                <a class="navbar-brand" href="about">About us</a>
+                {% if user.is_authenticated is False %}
+                <form action="{% url 'djangoapp:login' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="usernameLoginField" placeholder="Username">
+                    <input type="password" name="passwordLoginField" placeholder="Password">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <form action="{% url 'djangoapp:registration' %}" method="GET">
+                    <button type="submit" class="btn btn-light">Sign Up</button>
+                </form>
+                {% else %}
+                <form action="{% url 'djangoapp:logout' %}" method="POST">
+                    {% csrf_token %}
+                    {{ user.username }}
+                    <button type="submit" class="btn btn-light">Logout</button>
+                </form>
+                {% endif %}
+
         </div>
     </nav>
 
