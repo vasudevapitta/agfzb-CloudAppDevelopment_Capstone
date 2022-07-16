@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import CarModel
+from .models import CarModel, CarMake
 from .restapis import post_request, get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -78,7 +78,8 @@ def registration_request(request):
 def get_dealerships(request):
     context = dict()
     if request.method == "GET":
-        url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud/api/dealership?state=\"\""
+        # TODO update URL below
+        url = ""
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_list'] = dealerships
@@ -94,7 +95,8 @@ def get_dealer_details(request, dealer_id):
 
     if request.method == "GET":
         context=dict()
-        url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud"
+        # TODO update URL below
+        url = ""
         dealer_url = url + "/api/dealership"
         review_url = url + "/api/review"
 
@@ -117,7 +119,8 @@ def get_dealer_details(request, dealer_id):
 def add_review(request, dealer_id):
     if request.method == "GET":
         context = dict()
-        url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud"
+        # TODO update URL below
+        url = ""
 
         dealer, dealer_status = get_dealer_by_id(url, dealer_id)
         context["dealer"] = dealer
@@ -129,6 +132,7 @@ def add_review(request, dealer_id):
 
     elif request.method == "POST":
         if request.user.is_authenticated:
+            # TODO update URL below
             url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud"
             review = dict()
             review["name"] = request.user.username
@@ -157,7 +161,8 @@ def add_review(request, dealer_id):
         else:    
             context=dict()
             context["error"] = "User is not authenticated"
-            url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud"
+            # TODO update URL below
+            url = ""
             dealer, dealer_status = get_dealer_by_id(url, dealer_id)
             context["dealer"] = dealer
             context["result"] = dealer_status
