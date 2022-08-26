@@ -79,7 +79,7 @@ def get_dealerships(request):
     context = dict()
     if request.method == "GET":
         # TODO update URL below
-        url = ""
+        url = "https://ffd2ff0b.us-south.apigw.appdomain.cloud/api/dealerships"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_list'] = dealerships
@@ -96,8 +96,8 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         context=dict()
         # TODO update URL below
-        url = ""
-        dealer_url = url + "/api/dealership"
+        url = "https://ffd2ff0b.us-south.apigw.appdomain.cloud"
+        dealer_url = url + "/api/dealerships"
         review_url = url + "/api/review"
 
         dealer, dealer_status = get_dealer_by_id(dealer_url, dealer_id)
@@ -133,7 +133,7 @@ def add_review(request, dealer_id):
     elif request.method == "POST":
         if request.user.is_authenticated:
             # TODO update URL below
-            url = "https://630f2802-ef1e-4b85-80eb-a1d6f6e2644b-bluemix.cloudantnosqldb.appdomain.cloud"
+            url = "https://ffd2ff0b.us-south.apigw.appdomain.cloud/api/review"
             review = dict()
             review["name"] = request.user.username
             review["dealership"] = dealer_id
@@ -162,7 +162,7 @@ def add_review(request, dealer_id):
             context=dict()
             context["error"] = "User is not authenticated"
             # TODO update URL below
-            url = ""
+            url = "https://ffd2ff0b.us-south.apigw.appdomain.cloud/api/dealerships"
             dealer, dealer_status = get_dealer_by_id(url, dealer_id)
             context["dealer"] = dealer
             context["result"] = dealer_status
