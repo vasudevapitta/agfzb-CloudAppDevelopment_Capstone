@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import CarModel, CarMake
-from .restapis import post_request, get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id
+from .restapis import post_request, get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -83,7 +83,6 @@ def get_dealerships(request):
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_list'] = dealerships
-        context["result"] = result
         # Return a list of dealer short name
         return render(request, 'djangoapp/index.html', context)
 
@@ -100,7 +99,7 @@ def get_dealer_details(request, dealer_id):
         dealer_url = url + "/api/dealerships"
         review_url = url + "/api/review"
 
-        dealer, dealer_status = get_dealer_by_id(dealer_url, dealer_id)
+        dealer, dealer_status = get_dealer_by_id_from_cf(dealer_url, dealer_id)
         context["dealer"] = dealer
         context["dealer_result"] = dealer_status
 
@@ -122,7 +121,7 @@ def add_review(request, dealer_id):
         # TODO update URL below
         url = ""
 
-        dealer, dealer_status = get_dealer_by_id(url, dealer_id)
+        dealer, dealer_status = get_dealer_by_id_from_cf(url, dealer_id)
         context["dealer"] = dealer
         context["result"] = dealer_status
         cars = CarModel.objects.all().filter(dealer_id=dealer_id)
@@ -163,7 +162,7 @@ def add_review(request, dealer_id):
             context["error"] = "User is not authenticated"
             # TODO update URL below
             url = "https://ffd2ff0b.us-south.apigw.appdomain.cloud/api/dealerships"
-            dealer, dealer_status = get_dealer_by_id(url, dealer_id)
+            dealer, dealer_status = get_dealer_by_id_from_cf(url, dealer_id)
             context["dealer"] = dealer
             context["result"] = dealer_status
             context["dealer_id"] = dealer_id
